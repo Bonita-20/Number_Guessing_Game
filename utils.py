@@ -1,5 +1,4 @@
 import random
-import sys
 from pathlib import Path
 import getpass
 
@@ -32,9 +31,9 @@ def difficulty_level():
         if level == '1':
             return EASY['max_num'], EASY['attempt'], EASY['multiplier']
         elif level == '2':
-            return MEDIUM['max_num'], MEDIUM['attempt'], EASY['multiplier']
+            return MEDIUM['max_num'], MEDIUM['attempt'], MEDUIM['multiplier']
         elif level == '3':
-            return HARD['max_num'], HARD['attempt'], EASY['multiplier']
+            return HARD['max_num'], HARD['attempt'], HARD['multiplier']
 
         print('Invalid Choice. Choose a valid level.(1, 2, or 3)')
 
@@ -149,14 +148,14 @@ def update_leaderboard(player, total_score):
     if file_path.is_file():
         content = file_path.read_text(encoding="utf-8")
         lines = content.split('\n')
-#        print("DEBUG---------------", lines, file=sys.stderr)
         content = {line.split(' - ')[0]: int(line.split(' - ')[1]) for line in lines if line != "" }
         if player not in content.keys():
             content[player] = total_score
         else:
             if total_score > content[player]:
                 content[player] = total_score
-        leaderboard_string = "\n".join([f"{key} - {value}" for key , value in content.items()])
+        sorted_lead = sorted(content.items(), key = lamnda x: x[1], reverse = True)
+        leaderboard_string = "\n".join([f"{key} - {value}" for key , value in sorted_lead])
         Path(file_path).write_text(leaderboard_string, encoding="utf-8")
     else:
         Path(file_path).open(mode="a", encoding="utf-8").write(f"{player} - {total_score}\n")

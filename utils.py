@@ -138,24 +138,70 @@ def close_percentage(secret_number, user_input):
     else:
         return"you were very close to the secret number"
 
-# update the leaderboard file 
-def update_leaderboard(player, total_score):
-    # check if the file exists 
-        # if it exists we are going to read its contents, parse it and update it 
-        # if it doesnt we are just going to write the new leaderboard to the file 
+def get_leaderboard():
     file_path = Path("leaderboard.txt")
 
-    if file_path.is_file():
-        content = file_path.read_text(encoding="utf-8")
-        lines = content.split('\n')
-        content = {line.split(' - ')[0]: int(line.split(' - ')[1]) for line in lines if line != "" }
-        if player not in content.keys():
-            content[player] = total_score
+    if not file_path.is_file():
+        return {}
+    content = file_path.read_text(encoding="utf-8")
+    lines = content.split('\n')
+    leaderboard = {line.split(' - ')[0]: int(line.split(' - ')[1]) for line in lines if line != "" }
+
+    return leaderboard
+
+# Check if a player already exist in leaderboard
+def player_exist(player):
+    leaderboard = get_leaderboard()
+    return player in leaderboard
+
+# Get player name and check if it exists in leaderboard
+def get_player_name():
+    while True:
+        player = input('\nEnter your name: ').strip().upper()
+
+        if not player:
+            print("Name cannot be empty.")
+            continue
+
+        if not player_exist(player):
+            return player
+
+    print(f"\n{player} already exists in the leaderboard")
+    print("Are you the same person?")
+    print("[1] Yes")
+    print("[2] No")
+
+    choice = input("Choose 1 or 2: ").strip()
+    while choice not in [1, 2]:
+        if choice == '1':
+            return player
+        elif choice == '2':
+            print("Please enter a different name.")
+            continue
         else:
-            if total_score > content[player]:
-                content[player] = total_score
-        sorted_lead = sorted(content.items(), key = lamnda x: x[1], reverse = True)
-        leaderboard_string = "\n".join([f"{key} - {value}" for key , value in sorted_lead])
-        Path(file_path).write_text(leaderboard_string, encoding="utf-8")
-    else:
-        Path(file_path).open(mode="a", encoding="utf-8").write(f"{player} - {total_score}\n")
+            print("Invalid choice. Choose 1 or 2.")
+            choice = input("Choose 1 or 2: ").strip()
+
+#Get second player name for 2 player mode
+def get_second_player_name(first_player):
+    while True:
+        player = get_player_name()
+
+        if player.lower() == first_player.lower():
+            print(f"{player} is already player 1.")
+            print("Player 2 must have a different name.")
+        else:
+            return player
+# update the leaderboard file 
+def update_leaderboard(player, total_score):
+    file_path = Path("leaderboard.txt")
+
+    leaderboard = get_leaderboard()
+     
+    if player not in leaderboard:
+        leaderboard[player] = total_score
+    elif total_score > leaderboard[player]:
+        leaderboard[player] = total_score
+    sorted_lead = sorted(leaderboard.items(), key = lambda x: x[1], reverse = True)
+    leaderboard_string = "\n".join([f"{key} - {value}" for key , value in sorted_lead])
+    file_path.write_text(leaderboard_string + "\n", encoding="utf-8")

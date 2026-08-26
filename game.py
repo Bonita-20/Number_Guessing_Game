@@ -106,7 +106,7 @@ def main_game():
     mode = utils.play_mode()
 
     if mode == "Computer Mode":
-        player = input("\nEnter your name: ").strip().upper() or "Player"
+        player = utils.get_player_name()
         total_score = 0
         while True:
             round_score = computer_mode(player)
@@ -125,8 +125,8 @@ def main_game():
                 utils.update_leaderboard(player, total_score)
                 break                                                            
     else:
-        player1 = input("\nEnter player 1 name: ").strip().upper() or "Player 1"
-        player2 = input("\nEnter player 2 name: ").strip().upper() or "Player 2"
+        player1 = utils.get_player_name()
+        player2 = utils.get_second_player_name(player1)
 
         player1_total_score = 0
         player2_total_score = 0

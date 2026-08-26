@@ -31,7 +31,7 @@ def difficulty_level():
         if level == '1':
             return EASY['max_num'], EASY['attempt'], EASY['multiplier']
         elif level == '2':
-            return MEDIUM['max_num'], MEDIUM['attempt'], MEDUIM['multiplier']
+            return MEDIUM['max_num'], MEDIUM['attempt'], MEDIUM['multiplier']
         elif level == '3':
             return HARD['max_num'], HARD['attempt'], HARD['multiplier']
 
@@ -166,13 +166,12 @@ def get_player_name():
         if not player_exist(player):
             return player
 
-    print(f"\n{player} already exists in the leaderboard")
-    print("Are you the same person?")
-    print("[1] Yes")
-    print("[2] No")
+        print(f"\n{player} already exists in the leaderboard")
+        print("Are you the same person?")
+        print("[1] Yes")
+        print("[2] No")
 
-    choice = input("Choose 1 or 2: ").strip()
-    while choice not in [1, 2]:
+        choice = input("Choose 1 or 2: ").strip()
         if choice == '1':
             return player
         elif choice == '2':
@@ -180,7 +179,6 @@ def get_player_name():
             continue
         else:
             print("Invalid choice. Choose 1 or 2.")
-            choice = input("Choose 1 or 2: ").strip()
 
 #Get second player name for 2 player mode
 def get_second_player_name(first_player):

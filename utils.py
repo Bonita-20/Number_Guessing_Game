@@ -166,21 +166,21 @@ def get_player_name():
         if not player_exist(player):
             return player
 
-    print(f"\n{player} already exists in the leaderboard")
-    print("Are you the same person?")
-    print("[1] Yes")
-    print("[2] No")
+        print(f"\n{player} already exists in the leaderboard")
+        print("Are you the same person?")
+        print("[1] Yes")
+        print("[2] No")
 
-    choice = input("Choose 1 or 2: ").strip()
-    while choice not in [1, 2]:
-        if choice == '1':
-            return player
-        elif choice == '2':
-            print("Please enter a different name.")
-            continue
-        else:
-            print("Invalid choice. Choose 1 or 2.")
-            choice = input("Choose 1 or 2: ").strip()
+        choice = input("Choose 1 or 2: ").strip()
+        while choice not in [1, 2]:
+            if choice == '1':
+                return player
+            elif choice == '2':
+                print("Please enter a different name.")
+                continue
+            else:
+                print("Invalid choice. Choose 1 or 2.")
+                choice = input("Choose 1 or 2: ").strip()
 
 #Get second player name for 2 player mode
 def get_second_player_name(first_player):

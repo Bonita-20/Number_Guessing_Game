@@ -31,7 +31,7 @@ def difficulty_level():
         if level == '1':
             return EASY['max_num'], EASY['attempt'], EASY['multiplier']
         elif level == '2':
-            return MEDIUM['max_num'], MEDIUM['attempt'], MEDUIM['multiplier']
+            return MEDIUM['max_num'], MEDIUM['attempt'], MEDIUM['multiplier']
         elif level == '3':
             return HARD['max_num'], HARD['attempt'], HARD['multiplier']
 
